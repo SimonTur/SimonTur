@@ -6,15 +6,15 @@ import java.util.List;
 @SpringBootTest
 public class FillingTests {
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientRepository ClientRepository;
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryRepository CategoryRepository;
     @Autowired
-    private ProductRepository productRepository;
+    private ProductRepository ProductRepository;
     @Autowired
-    private ClientOrderRepository clientOrderRepository;
+    private ClientOrderRepository ClientOrderRepository;
     @Autowired
-    private OrderProductRepository orderProductRepository;
+    private OrderProductRepository OrderProductRepository;
 
     @Test
     public void fillDatabaseWithTestData() {
