@@ -1,17 +1,17 @@
 package ru.SimonTur.tgBot.entity;
 
 import jakarta.persistence.*;
-import jdk.jfr.Category;
+//import jdk.jfr.Category;
 
 @Entity
 
 public class Product {
         @Id
-        @GeneratedValue
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
         @ManyToOne
-        @JoinColumn(nullable = false)
+        @JoinColumn(name = "category_id")
         private Category category;
 
         @Column(nullable = false, length = 50, unique = true)

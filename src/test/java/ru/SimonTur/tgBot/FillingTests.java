@@ -1,20 +1,28 @@
+package ru.SimonTur.tgBot;
+
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.boot.test.context.SpringBootTest;
-import java.util.List;
+import ru.SimonTur.tgBot.repository.*;
+import ru.SimonTur.tgBot.entity.*;
 
-@SpringBootTest
+
+@SpringBootTest (classes = TgBotApplication.class)
+@ActiveProfiles("test")
+@Transactional
 public class FillingTests {
     @Autowired
-    private ClientRepository ClientRepository;
+    private ClientRepository clientRepository;
     @Autowired
-    private CategoryRepository CategoryRepository;
+    private CategoryRepository categoryRepository;
     @Autowired
-    private ProductRepository ProductRepository;
+    private ProductRepository productRepository;
     @Autowired
-    private ClientOrderRepository ClientOrderRepository;
+    private ClientOrderRepository clientOrderRepository;
     @Autowired
-    private OrderProductRepository OrderProductRepository;
+    private OrderProductRepository orderProductRepository;
 
     @Test
     public void fillDatabaseWithTestData() {
@@ -100,10 +108,17 @@ public class FillingTests {
         ClientOrder order2 = createOrder(client2, 2, 840.0);
 
         // 8. Добавляем товары в заказы
-        addProductToOrder(order1, productRepository.findByName("Филадельфия").get(0), 3);
-        addProductToOrder(order1, productRepository.findByName("Кола").get(0), 2);
-        addProductToOrder(order2, productRepository.findByName("Чизбургер").get(0), 2);
-        addProductToOrder(order2, productRepository.findByName("Апельсиновый").get(0), 1);
+        Product product = productRepository.findByName("Филадельфия").stream().findFirst().orElseThrow();
+        addProductToOrder(order1, product, 3);
+
+        Product cola = productRepository.findByName("Кола").stream().findFirst().orElseThrow();
+        addProductToOrder(order1, cola, 2);
+
+        Product cheeseburger = productRepository.findByName("Чизбургер").stream().findFirst().orElseThrow();
+        addProductToOrder(order2, cheeseburger, 2);
+
+        Product orangeJuice = productRepository.findByName("Апельсиновый").stream().findFirst().orElseThrow();
+        addProductToOrder(order2, orangeJuice, 1);
     }
 
     private Client createClient(Long externalId, String fullName, String phoneNumber, String address) {
@@ -112,7 +127,7 @@ public class FillingTests {
         client.setFullName(fullName);
         client.setPhoneNumber(phoneNumber);
         client.setAddress(address);
-        return clientRepository.save(client);
+        return clientRepository.save(client);  // Исправлено: clientRepository вместо ClientRepository
     }
 
     private Category createCategory(String name, Category parent) {
