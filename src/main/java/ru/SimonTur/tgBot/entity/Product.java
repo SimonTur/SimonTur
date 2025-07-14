@@ -2,10 +2,10 @@ package ru.SimonTur.tgBot.entity;
 
 import jakarta.persistence.*;
 //import jdk.jfr.Category;
-
 @Entity
-
+@Table(name = "product")
 public class Product {
+
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
@@ -24,18 +24,38 @@ public class Product {
         private Double price;
 
         // Геттеры и сеттеры
-        public Long getId() { return id; }
-        public void setId(Long id) { this.id = id; }
-        public Category getCategory() { return category; }
-        public void setCategory() { this.category = category; }
-        public String getName() { return name; }
-        public void setName(String name) { this.name = name; }
-        public String getDescription() { return description; }
-        public void setDescription(String description) { this.description = description; }
-        public Double getPrice() { return price; }
-        public void setPrice(Double price) { this.price = price; }
-
-        public void setCategory(ru.SimonTur.tgBot.entity.Category category) {
-
+        public Long getId(){
+        return id;
         }
+        public void setId(Long id){
+        this.id = id;
+        }
+        public Category getCategory(){
+        return category;
+        }
+        public void setCategory(){
+        this.category = category;
+        }
+        public String getName(){
+        return name;
+        }
+        public void setName(String name){
+        this.name = name;
+        }
+        public String getDescription(){
+        return description;
+        }
+        public void setDescription(String description){
+        this.description = description;
+        }
+        public Double getPrice(){
+        return price;
+        }
+        public void setPrice(Double price){
+        this.price = price;
+        }
+        public void setCategory(ru.SimonTur.tgBot.entity.Category category)
+        {
+        }
+
 }

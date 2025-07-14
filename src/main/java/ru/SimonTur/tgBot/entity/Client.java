@@ -1,9 +1,8 @@
 package ru.SimonTur.tgBot.entity;
 
 import jakarta.persistence.*;
-
-@Entity
-@Table(name = "Client")
+        @Entity
+        @Table(name = "client")
 public class Client {
 
         @Id
@@ -17,18 +16,37 @@ public class Client {
         private String phoneNumber;
         @Column(nullable = false, length = 400)
         private String address;
+
         // Геттеры и сеттеры
-        public Long getId() { return id; }
-        public void setId(Long id) { this.id = id; }
-        public Long getExternalId() { return externalId; }
-        public void setExternalId(Long externalId) { this.externalId = externalId; }
-        public String getFullName() { return fullName; }
-        public void setFullName(String fullName) { this.fullName = fullName; }
-        public String getPhoneNumber() { return phoneNumber; }
-        public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-        public String getAddress() { return address; }
-        public void setAddress(String address) { this.address = address; }
-
-
+        public Long getId(){
+        return id;
+        }
+        public void setId(Long id){
+        this.id = id;
+        }
+        public Long getExternalId(){
+        return externalId;
+        }
+        public void setExternalId(Long externalId){
+        this.externalId = externalId;
+        }
+        public String getFullName(){
+        return fullName;
+        }
+        public void setFullName(String fullName){
+        this.fullName = fullName;
+        }
+        public String getPhoneNumber(){
+        return phoneNumber;
+        }
+        public void setPhoneNumber(String phoneNumber){
+        this.phoneNumber = phoneNumber;
+        }
+        public String getAddress(){
+        return address;
+        }
+        public void setAddress(String address){
+        this.address = address;
+        }
 
 }
