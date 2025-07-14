@@ -1,49 +1,57 @@
 package ru.SimonTur.tgBot.entity;
 
 import jakarta.persistence.*;
+
 @Entity
 @Table(name = "orderproduct")
 public class OrderProduct {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        @ManyToOne
-        @JoinColumn(nullable = false)
-        private ClientOrder clientOrder;
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private ClientOrder clientOrder;
 
-        @ManyToOne
-        @JoinColumn(nullable = false)
-        private Product product;
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Product product;
 
-        @Column(nullable = false)
-        private Integer countProduct;
+    @Column(nullable = false)
+    private Integer countProduct;
 
-        // Геттеры и сеттеры
-        public Long getId(){
+    // Геттеры и сеттеры
+    public Long getId() {
         return id;
-        }
-        public void setId(Long id){
+    }
+
+    public void setId(Long id) {
         this.id = id;
-        }
-        public ClientOrder getClientOrder(){
+    }
+
+    public ClientOrder getClientOrder() {
         return clientOrder;
-        }
-        public void setClientOrder(ClientOrder clientOrder){
+    }
+
+    public void setClientOrder(ClientOrder clientOrder) {
         this.clientOrder = clientOrder;
-        }
-        public Product getProduct(){
+    }
+
+    public Product getProduct() {
         return product;
-        }
-        public void setProduct(Product product){
+    }
+
+    public void setProduct(Product product) {
         this.product = product;
-        }
-        public Integer getCountProduct(){
+    }
+
+    public Integer getCountProduct() {
         return countProduct;
-        }
-        public void setCountProduct(Integer countProduct){
+    }
+
+    public void setCountProduct(Integer countProduct) {
         this.countProduct = countProduct;
-        }
+    }
 
 }

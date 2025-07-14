@@ -9,7 +9,7 @@ import ru.SimonTur.tgBot.repository.*;
 import ru.SimonTur.tgBot.entity.*;
 
 
-@SpringBootTest (classes = TgBotApplication.class)
+@SpringBootTest(classes = TgBotApplication.class)
 @ActiveProfiles("test")
 @Transactional
 public class FillingTests {
