@@ -15,9 +15,15 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
-@SpringBootTest
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+
+
+
+@SpringBootTest(classes = TgBotApplication.class)
 @ActiveProfiles("test")
 @Transactional
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+
 public class FillingTests {
 
     @Autowired

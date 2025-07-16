@@ -22,7 +22,7 @@ public class OrderProduct {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    //@Column(name = "count_product")
+    @Column(name = "count_product")
     private Integer countProduct;
 
     // Геттеры и сеттеры

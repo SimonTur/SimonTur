@@ -1,6 +1,8 @@
 package ru.SimonTur.tgBot.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,8 +23,8 @@ public class ClientOrder {
     @Column(name = "total")
     private Double total;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderProduct> orderProducts;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderProduct> orderProducts = new ArrayList<>();
 
     // Геттеры и сеттеры
     public Long getId() { return id; }

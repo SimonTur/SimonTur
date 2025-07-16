@@ -10,15 +10,21 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    List<Product> findByName(String name);
-
-    @Query("SELECT DISTINCT p FROM ClientOrder o JOIN o.products p WHERE o.client.id = :clientId")
+    @Query("SELECT DISTINCT p FROM Product p " +
+            "INNER JOIN OrderProduct op ON p = op.product " +
+            "INNER JOIN op.order o " +
+            "INNER JOIN o.client c " +
+            "WHERE c.id = :clientId")
     List<Product> findProductsByClientId(@Param("clientId") Long clientId);
+    @Query("SELECT p FROM Product p WHERE p.category.id = :categoryId")
+    List<Product> findByCategoryId(@Param("categoryId") Long categoryId);
+    @Query("SELECT p FROM Product p " +
+            "JOIN OrderProduct op ON p = op.product " +
+            "GROUP BY p.id " +
+            "ORDER BY COUNT(op) DESC " +
+            "LIMIT :limit")
+    List<Product> findTopPopularProducts(@Param("limit") Integer limit);
 
-    // Остальные методы...
-    List<Product> findByCategoryId(Long categoryId);
+    // Для поиска по названию (без учета регистра)
     List<Product> findByNameContainingIgnoreCase(String name);
-
-    @Query("SELECT p FROM Product p JOIN p.orders o GROUP BY p.id ORDER BY COUNT(p) DESC")
-    List<Product> findTopPopularProducts(Integer limit);
 }
