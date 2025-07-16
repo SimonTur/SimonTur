@@ -25,6 +25,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "LIMIT :limit")
     List<Product> findTopPopularProducts(@Param("limit") Integer limit);
 
-    // Для поиска по названию (без учета регистра)
+
+    // Поиск по названию
     List<Product> findByNameContainingIgnoreCase(String name);
+
+    // Популярные товары
+    @Query("SELECT p FROM Product p JOIN p.orderProducts op GROUP BY p ORDER BY COUNT(op) DESC LIMIT :limit")
+    List<Product> findTopPopularProducts(@Param("limit") int limit);
+
 }

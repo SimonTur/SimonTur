@@ -2,6 +2,7 @@ package ru.SimonTur.tgBot;
 
 import jakarta.transaction.Transactional;
 import org.hibernate.annotations.processing.SQL;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
@@ -36,6 +37,28 @@ public class FillingTests {
     private ClientOrderRepository clientOrderRepository;
     @Autowired
     private OrderProductRepository orderProductRepository;
+
+
+
+
+
+    @BeforeEach
+    void setUp() {
+        // Инициализация тестовых данных
+        Category category = new Category();
+        category.setName("Test Category");
+        categoryRepository.save(category);
+
+        Product product = new Product();
+        product.setName("Test Product");
+        product.setCategory(category);
+        productRepository.save(product);
+    }
+
+
+
+
+
 
     @Test
     public void fillDatabaseWithTestData() {
