@@ -1,20 +1,25 @@
 package ru.SimonTur.tgBot;
 
 import jakarta.transaction.Transactional;
+import org.hibernate.annotations.processing.SQL;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import ru.SimonTur.tgBot.repository.*;
 import ru.SimonTur.tgBot.model.*;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
-@SpringBootTest(classes = TgBotApplication.class)
+@SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-@Sql(scripts = "/schema.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class FillingTests {
+
     @Autowired
     private ClientRepository clientRepository;
     @Autowired

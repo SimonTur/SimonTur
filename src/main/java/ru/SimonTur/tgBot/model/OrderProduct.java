@@ -1,6 +1,10 @@
 package ru.SimonTur.tgBot.model;
 
 import jakarta.persistence.*;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 @Entity
 @Table(name = "order_products")
@@ -8,6 +12,7 @@ public class OrderProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -17,7 +22,7 @@ public class OrderProduct {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "count_product")
+    //@Column(name = "count_product")
     private Integer countProduct;
 
     // Геттеры и сеттеры

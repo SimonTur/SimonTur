@@ -6,6 +6,7 @@ import java.util.List;
 @Entity
 @Table(name = "client_orders")
 public class ClientOrder {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,7 +16,7 @@ public class ClientOrder {
     private Client client;
 
     @Column(name = "status")
-    private Integer status;
+   private Integer status;
 
     @Column(name = "total")
     private Double total;
