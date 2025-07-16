@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.SimonTur.tgBot.repository.*;
-import ru.SimonTur.tgBot.entity.*;
+import ru.SimonTur.tgBot.model.*;
 
+import java.util.List;
 
 @SpringBootTest(classes = TgBotApplication.class)
 @ActiveProfiles("test")
 @Transactional
+@Sql(scripts = "/schema.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class FillingTests {
     @Autowired
     private ClientRepository clientRepository;
@@ -42,92 +44,30 @@ public class FillingTests {
         Category sweetRolls = createCategory("Сладкие роллы", rolls);
         Category rollSets = createCategory("Наборы", rolls);
 
-        // 4. Создаем подкатегории для Бургеров
-        Category classicBurgers = createCategory("Классические бургеры", burgers);
-        Category spicyBurgers = createCategory("Острые бургеры", burgers);
+        // 4. Создаем товары
+        Product philadelphia = createProduct("Филадельфия", "Лосось, сыр, рис", 350.0, classicRolls);
+        Product california = createProduct("Калифорния", "Краб, авокадо, огурец", 320.0, classicRolls);
+        Product cola = createProduct("Кола", "0.5 л", 120.0, drinks);
+        Product cheeseburger = createProduct("Чизбургер", "Говядина, сыр, соус", 250.0, burgers);
 
-        // 5. Создаем подкатегории для Напитков
-        Category soda = createCategory("Газированные напитки", drinks);
-        Category energyDrinks = createCategory("Энергетические напитки", drinks);
-        Category juices = createCategory("Соки", drinks);
-        Category otherDrinks = createCategory("Другие", drinks);
-
-        // 6. Создаем товары (минимум 3 в каждой подкатегории)
-        // 6.1 Классические роллы
-        createProduct("Филадельфия", "Лосось, сыр, рис", 350.0, classicRolls);
-        createProduct("Калифорния", "Краб, авокадо, огурец", 320.0, classicRolls);
-        createProduct("Унаги", "Угорь, соус унаги", 380.0, classicRolls);
-
-        // 6.2 Запеченные роллы
-        createProduct("Запеченный с креветкой", "Креветка, сыр, соус", 400.0, bakedRolls);
-        createProduct("Запеченный с лососем", "Лосось, сыр, икра", 420.0, bakedRolls);
-        createProduct("Запеченный с угрем", "Угорь, сыр, соус спайси", 450.0, bakedRolls);
-
-        // 6.3 Сладкие роллы
-        createProduct("Банан-шоколад", "Банан, шоколад, нутелла", 280.0, sweetRolls);
-        createProduct("Клубничный", "Клубника, сливочный сыр", 300.0, sweetRolls);
-        createProduct("Манго-кокос", "Манго, кокосовая стружка", 320.0, sweetRolls);
-
-        // 6.4 Наборы роллов
-        createProduct("Набор 'Стандарт'", "4 ролла по 8 шт", 1200.0, rollSets);
-        createProduct("Набор 'Премиум'", "6 роллов по 8 шт", 1800.0, rollSets);
-        createProduct("Набор 'Семейный'", "8 роллов по 8 шт", 2400.0, rollSets);
-
-        // 6.5 Классические бургеры
-        createProduct("Чизбургер", "Говядина, сыр, соус", 250.0, classicBurgers);
-        createProduct("Гамбургер", "Говядина, овощи", 220.0, classicBurgers);
-        createProduct("Чикенбургер", "Курица, салат", 230.0, classicBurgers);
-
-        // 6.6 Острые бургеры
-        createProduct("Двойной острый", "2 котлеты, острый соус", 350.0, spicyBurgers);
-        createProduct("Мексиканский", "Котлета, халапеньо, сальса", 320.0, spicyBurgers);
-        createProduct("Каррибургер", "Курица, соус карри", 300.0, spicyBurgers);
-
-        // 6.7 Газированные напитки
-        createProduct("Кола", "0.5 л", 120.0, soda);
-        createProduct("Фанта", "0.5 л", 120.0, soda);
-        createProduct("Спрайт", "0.5 л", 120.0, soda);
-
-        // 6.8 Энергетические напитки
-        createProduct("Red Bull", "250 мл", 180.0, energyDrinks);
-        createProduct("Burn", "250 мл", 150.0, energyDrinks);
-        createProduct("Adrenaline Rush", "250 мл", 160.0, energyDrinks);
-
-        // 6.9 Соки
-        createProduct("Апельсиновый", "1 л", 200.0, juices);
-        createProduct("Яблочный", "1 л", 180.0, juices);
-        createProduct("Томатный", "1 л", 170.0, juices);
-
-        // 6.10 Другие напитки
-        createProduct("Чай зеленый", "500 мл", 100.0, otherDrinks);
-        createProduct("Чай черный", "500 мл", 100.0, otherDrinks);
-        createProduct("Кофе латте", "300 мл", 150.0, otherDrinks);
-
-        // 7. Создаем заказы
+        // 5. Создаем заказы
         ClientOrder order1 = createOrder(client1, 1, 1050.0);
         ClientOrder order2 = createOrder(client2, 2, 840.0);
 
-        // 8. Добавляем товары в заказы
-        Product product = productRepository.findByName("Филадельфия").stream().findFirst().orElseThrow();
-        addProductToOrder(order1, product, 3);
-
-        Product cola = productRepository.findByName("Кола").stream().findFirst().orElseThrow();
-        addProductToOrder(order1, cola, 2);
-
-        Product cheeseburger = productRepository.findByName("Чизбургер").stream().findFirst().orElseThrow();
-        addProductToOrder(order2, cheeseburger, 2);
-
-        Product orangeJuice = productRepository.findByName("Апельсиновый").stream().findFirst().orElseThrow();
-        addProductToOrder(order2, orangeJuice, 1);
+        // 6. Добавляем товары в заказы
+        addProductToOrder(order1, philadelphia, 2);
+        addProductToOrder(order1, cola, 1);
+        addProductToOrder(order2, cheeseburger, 3);
+        addProductToOrder(order2, california, 1);
     }
 
     private Client createClient(Long externalId, String fullName, String phoneNumber, String address) {
         Client client = new Client();
-        client.setExternalId(externalId);
+        client.setExternalId(externalId);  // Теперь метод доступен
         client.setFullName(fullName);
         client.setPhoneNumber(phoneNumber);
         client.setAddress(address);
-        return clientRepository.save(client);  // Исправлено: clientRepository вместо ClientRepository
+        return clientRepository.save(client);
     }
 
     private Category createCategory(String name, Category parent) {
@@ -141,7 +81,7 @@ public class FillingTests {
         Product product = new Product();
         product.setName(name);
         product.setDescription(description);
-        product.setPrice(price);
+        product.setPrice(price);  // Теперь метод доступен
         product.setCategory(category);
         return productRepository.save(product);
     }
@@ -150,13 +90,14 @@ public class FillingTests {
         ClientOrder order = new ClientOrder();
         order.setClient(client);
         order.setStatus(status);
-        order.setTotal(total);
+        order.setTotal(total);  // Теперь метод доступен
         return clientOrderRepository.save(order);
     }
 
+
     private void addProductToOrder(ClientOrder order, Product product, Integer count) {
         OrderProduct orderProduct = new OrderProduct();
-        orderProduct.setClientOrder(order);
+        orderProduct.setOrder(order);
         orderProduct.setProduct(product);
         orderProduct.setCountProduct(count);
         orderProductRepository.save(orderProduct);
