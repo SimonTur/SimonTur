@@ -9,4 +9,7 @@ public interface ProductService {
     List<Product> getClientProducts(long clientId);
     List<Product> getTopPopularProducts(Integer limit);
     List<Product> searchProductsByName(String name);
-}
+        // Добавляем новый метод
+        Product createProduct(Product product);
+       List<Product> getClientProducts(Long clientId);
+    }

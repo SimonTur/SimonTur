@@ -9,18 +9,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-//@RepositoryRestResource(collectionResourceRel = "products", path = "products")
+@RepositoryRestResource(collectionResourceRel = "products", path = "products")
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-
-    @RestResource(exported = false) // Эта версия не будет экспортирована в REST
-
     @Query("SELECT p FROM Product p JOIN p.orderProducts op GROUP BY p ORDER BY COUNT(op) DESC LIMIT :limit")
     List<Product> findTopPopularProducts(@Param("limit") Integer limit);
-
-
-
-
     @Query("SELECT DISTINCT p FROM Product p " +
             "INNER JOIN OrderProduct op ON p = op.product " +
             "INNER JOIN op.order o " +
@@ -29,10 +22,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findProductsByClientId(@Param("clientId") Long clientId);
     @Query("SELECT p FROM Product p WHERE p.category.id = :categoryId")
     List<Product> findByCategoryId(@Param("categoryId") Long categoryId);
-
-
-    // Поиск по названию
     List<Product> findByNameContainingIgnoreCase(String name);
-
-
 }
