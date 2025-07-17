@@ -25,7 +25,7 @@ public abstract class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getClientProducts(long clientId) {
+    public List<Product> getClientProducts(Long clientId) {//or long
         return productRepository.findProductsByClientId(clientId); // Теперь метод существует
     }
 
