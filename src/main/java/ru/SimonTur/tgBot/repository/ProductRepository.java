@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@RepositoryRestResource(collectionResourceRel = "products", path = "products")
+//@RepositoryRestResource(collectionResourceRel = "products", path = "products")
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
@@ -34,8 +34,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // Поиск по названию
     List<Product> findByNameContainingIgnoreCase(String name);
 
-    // Популярные товары
-    //@Query("SELECT p FROM Product p JOIN p.orderProducts op GROUP BY p ORDER BY COUNT(op) DESC LIMIT :limit")
-    //List<Product> findTopPopularProducts(@Param("limit") int limit);
 
 }
