@@ -1,5 +1,6 @@
 package ru.SimonTur.tgBot.repository;
 
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import ru.SimonTur.tgBot.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -7,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@RepositoryRestResource(collectionResourceRel = "products", path = "products")
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT DISTINCT p FROM Product p " +
