@@ -11,6 +11,7 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel = "products", path = "products")
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
+
     @Query("SELECT DISTINCT p FROM Product p " +
             "INNER JOIN OrderProduct op ON p = op.product " +
             "INNER JOIN op.order o " +
@@ -31,7 +32,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByNameContainingIgnoreCase(String name);
 
     // Популярные товары
-    @Query("SELECT p FROM Product p JOIN p.orderProducts op GROUP BY p ORDER BY COUNT(op) DESC LIMIT :limit")
-    List<Product> findTopPopularProducts(@Param("limit") int limit);
+    //@Query("SELECT p FROM Product p JOIN p.orderProducts op GROUP BY p ORDER BY COUNT(op) DESC LIMIT :limit")
+    //List<Product> findTopPopularProducts(@Param("limit") int limit);
 
 }
