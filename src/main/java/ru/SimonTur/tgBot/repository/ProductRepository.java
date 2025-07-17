@@ -12,6 +12,14 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+
+
+    @Query("SELECT p FROM Product p JOIN p.orderProducts op GROUP BY p ORDER BY COUNT(op) DESC LIMIT :limit")
+    List<Product> findTopPopularProducts(@Param("limit") Integer limit);
+
+
+
+
     @Query("SELECT DISTINCT p FROM Product p " +
             "INNER JOIN OrderProduct op ON p = op.product " +
             "INNER JOIN op.order o " +
@@ -20,12 +28,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findProductsByClientId(@Param("clientId") Long clientId);
     @Query("SELECT p FROM Product p WHERE p.category.id = :categoryId")
     List<Product> findByCategoryId(@Param("categoryId") Long categoryId);
-    @Query("SELECT p FROM Product p " +
-            "JOIN OrderProduct op ON p = op.product " +
-            "GROUP BY p.id " +
-            "ORDER BY COUNT(op) DESC " +
-            "LIMIT :limit")
-    List<Product> findTopPopularProducts(@Param("limit") Integer limit);
 
 
     // Поиск по названию
