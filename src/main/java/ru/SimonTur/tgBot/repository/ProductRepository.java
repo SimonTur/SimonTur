@@ -1,6 +1,7 @@
 package ru.SimonTur.tgBot.repository;
 
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
 import ru.SimonTur.tgBot.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-
+    @RestResource(exported = false) // Эта версия не будет экспортирована в REST
 
     @Query("SELECT p FROM Product p JOIN p.orderProducts op GROUP BY p ORDER BY COUNT(op) DESC LIMIT :limit")
     List<Product> findTopPopularProducts(@Param("limit") Integer limit);
